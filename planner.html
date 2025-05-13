@@ -638,5 +638,26 @@
 <!-- Load the main JavaScript file -->
 <script src="js/main.js"></script>
 
+<script>
+  // Get destination from URL parameters when page loads
+  window.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const destination = urlParams.get('destination');
+    
+    if (destination) {
+      // Decode the destination parameter
+      const decodedDestination = decodeURIComponent(destination);
+      
+      // Find the destination input field by ID
+      const destinationInput = document.getElementById('destination');
+      if (destinationInput) {
+        destinationInput.value = decodedDestination;
+        // Optional: Trigger any necessary updates or validations
+        destinationInput.dispatchEvent(new Event('input'));
+      }
+    }
+  });
+</script>
+
 </body>
 </html>

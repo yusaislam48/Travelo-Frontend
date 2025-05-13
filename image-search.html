@@ -294,6 +294,39 @@
       border-left: 4px solid var(--primary-color);
     }
 
+    .plan-trip-container {
+      margin-top: 2rem;
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(to right, rgba(255, 107, 107, 0.1), rgba(78, 205, 196, 0.1));
+      border-radius: var(--border-radius);
+      display: none;
+    }
+
+    .plan-trip-btn {
+      background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+      color: white;
+      border: none;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .plan-trip-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      color: white;
+    }
+
+    .plan-trip-btn i {
+      font-size: 1.2rem;
+    }
+
     @media (max-width: 768px) {
       .header-section {
         padding: 4rem 0 3rem;
@@ -403,6 +436,14 @@
       <ul id="thingsToDo" class="things-list"></ul>
     </div>
   </div>
+
+  <!-- Plan Trip Button -->
+  <div class="plan-trip-container" id="planTripContainer">
+    <button class="plan-trip-btn" onclick="redirectToPlanner()">
+      <i class="fas fa-plane-departure"></i>
+      Plan Your Trip to <span id="planTripDestination"></span>
+    </button>
+  </div>
 </div>
 
 <script>
@@ -500,10 +541,12 @@ async function analyzeImage() {
 
   const loader = document.getElementById('loader');
   const resultContainer = document.getElementById('resultContainer');
+  const planTripContainer = document.getElementById('planTripContainer');
   
   try {
     loader.style.display = 'block';
     resultContainer.style.display = 'none';
+    planTripContainer.style.display = 'none';
     
     const formData = new FormData();
     formData.append('image', currentFile);
@@ -520,10 +563,14 @@ async function analyzeImage() {
     const data = await response.json();
     
     // Update results
-    document.getElementById('placeName').textContent = data.place_name || 'Could not determine';
+    const placeName = data.place_name || 'Could not determine';
+    document.getElementById('placeName').textContent = placeName;
     document.getElementById('location').textContent = `${data.city || 'Unknown'}, ${data.country || 'Unknown'}`;
     document.getElementById('description').textContent = data.description || 'No description available';
     document.getElementById('bestTime').textContent = data.best_time || 'Information not available';
+    
+    // Update plan trip button destination
+    document.getElementById('planTripDestination').textContent = placeName;
     
     // Handle things to do as a list
     const thingsToDoElement = document.getElementById('thingsToDo');
@@ -553,6 +600,7 @@ async function analyzeImage() {
     }
     
     resultContainer.style.display = 'block';
+    planTripContainer.style.display = 'block';
     
     // Smooth scroll to results
     resultContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -562,6 +610,13 @@ async function analyzeImage() {
   } finally {
     loader.style.display = 'none';
   }
+}
+
+function redirectToPlanner() {
+  const destination = document.getElementById('placeName').textContent;
+  // Encode the destination to handle special characters in the URL
+  const encodedDestination = encodeURIComponent(destination);
+  window.location.href = `planner.html?destination=${encodedDestination}`;
 }
 </script>
 

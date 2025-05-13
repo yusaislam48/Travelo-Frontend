@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Travelo – Trip Planner</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    :root {
+      --primary-color: #FF6B6B;
+      --secondary-color: #4ECDC4;
+      --background-color: #f8f9fa;
+      --card-background: #ffffff;
+      --text-color: #2C3E50;
+      --border-radius: 16px;
+      --box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --accent-color: #FFE66D;
+      --danger-color: #FF6B6B;
+      --success-color: #4ECDC4;
+    }
+
+    body {
+      background-color: var(--background-color);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    .navbar {
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 0.75rem 0;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar-brand {
+      font-weight: 800;
+      font-size: 1.75rem;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-link {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      font-size: 0.95rem;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-color);
+      background-color: rgba(255, 107, 107, 0.1);
+    }
+
+    .settings-group {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-left: 1.5rem;
+      padding-left: 1.5rem;
+      border-left: 2px solid #e2e8f0;
+    }
+
+    .settings-dropdown {
+      position: relative;
+    }
+
+    .settings-dropdown select {
+      appearance: none;
+      background: transparent;
+      border: none;
+      padding: 0.5rem 2rem 0.5rem 0.75rem;
+      font-size: 0.9rem;
+      color: var(--text-color);
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .settings-dropdown::after {
+      content: '▼';
+      font-size: 0.8rem;
+      color: var(--text-color);
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .settings-dropdown select:hover {
+      background-color: rgba(255, 107, 107, 0.1);
+    }
+
+    .settings-dropdown select:focus {
+      outline: none;
+      background-color: rgba(255, 107, 107, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .settings-group {
+        margin-left: 1rem;
+        padding-left: 1rem;
+      }
+
+      .settings-dropdown select {
+        padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    .header-section {
+      padding: 4rem 0;
+      text-align: center;
+      background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+      color: white;
+      margin-bottom: 2rem;
+    }
+
+    .header-section h2 {
+      font-weight: 800;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .header-section p {
+      opacity: 0.9;
+      font-size: 1.1rem;
+    }
+
+    .trip-card {
+      background-color: var(--card-background);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      box-shadow: var(--box-shadow);
+      margin-bottom: 2rem;
+    }
+
+    .info-card {
+      background-color: var(--card-background);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow);
+      margin-top: 1.5rem;
+      transition: transform 0.2s ease;
+    }
+
+    .info-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .form-control, .form-select {
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      border: 1px solid #e2e8f0;
+      background-color: #f8fafc;
+      transition: all 0.2s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .btn-search {
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 12px;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-search:hover {
+      background-color: #ff5252;
+      transform: translateY(-1px);
+    }
+
+    .bg-soft-blue { background-color: #E3F2FD; }
+    .bg-soft-peach { background-color: #FFE5E5; }
+    .bg-soft-mint { background-color: #E0F5F2; }
+    .bg-soft-yellow { background-color: #FFF9E6; }
+    .bg-soft-purple { background-color: #F3E5F5; }
+
+    .hotel-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+
+    #map {
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+    }
+
+    .loader-container {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+    }
+
+    .error-message {
+      color: #ef4444;
+      background-color: #fef2f2;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    /* New styles for dedicated sections */
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--text-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .place-card {
+      background: var(--card-background);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+      transition: transform 0.2s ease;
+    }
+
+    .place-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .place-card-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .place-card-content {
+      padding: 1.5rem;
+    }
+
+    .place-card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-color);
+    }
+
+    .place-card-info {
+      font-size: 0.875rem;
+      color: #64748b;
+      margin-bottom: 0.5rem;
+    }
+
+    .place-card-rating {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .rating-stars {
+      color: #fbbf24;
+    }
+
+    .place-card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+
+    .place-card-link:hover {
+      color: var(--secondary-color);
+    }
+
+    .map-container {
+      background: var(--card-background);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+      margin-bottom: 2rem;
+    }
+
+    .map-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .map-content {
+      height: 500px;
+    }
+
+    .section-tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 1rem;
+    }
+
+    .section-tab {
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .section-tab.active {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .section-tab:not(.active):hover {
+      background: #f1f5f9;
+    }
+
+    .weather-widget {
+      background: linear-gradient(135deg, #4ECDC4, #2AB7CA);
+      color: white;
+      padding: 2rem;
+      border-radius: var(--border-radius);
+      margin: 3rem 0 2rem;
+      box-shadow: var(--box-shadow);
+    }
+
+    .weather-content {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .weather-temp {
+      font-size: 3.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      line-height: 1;
+    }
+
+    .weather-info {
+      font-size: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .distance-info {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .distance-item {
+      flex: 1;
+      background: var(--card-background);
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+
+    .distance-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .distance-label {
+      font-size: 0.875rem;
+      color: #64748b;
+      margin-top: 0.5rem;
+    }
+
+    /* New Itinerary Styles */
+    .itinerary-container {
+      background: var(--card-background);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+    }
+
+    .itinerary-header {
+      background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+      color: white;
+      padding: 2rem;
+    }
+
+    .itinerary-content {
+      padding: 2rem;
+    }
+
+    .itinerary-day {
+      border-left: 3px solid var(--secondary-color);
+      padding: 1rem 0 1rem 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .itinerary-day:last-child {
+      margin-bottom: 0;
+    }
+
+    .itinerary-day::before {
+      content: '';
+      position: absolute;
+      left: -9px;
+      top: 0;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: var(--secondary-color);
+      border: 3px solid white;
+      box-shadow: var(--box-shadow);
+    }
+
+    .itinerary-day h4 {
+      color: var(--primary-color);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+    }
+
+    .itinerary-day p {
+      color: var(--text-color);
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+    }
+
+    .itinerary-day ul {
+      margin: 1rem 0;
+      padding-left: 1.5rem;
+    }
+
+    .itinerary-day li {
+      margin-bottom: 0.5rem;
+      color: #4b5563;
+    }
+
+    .itinerary-day .time {
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    .itinerary-day .location {
+      font-style: italic;
+      color: #6b7280;
+    }
+
+    .itinerary-day .cost {
+      display: inline-block;
+      background: #f3f4f6;
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.875rem;
+      color: #374151;
+      margin-left: 0.5rem;
+    }
+
+    /* Update section spacing */
+    #resultBox {
+      padding-top: 2rem;
+    }
+
+    .section-tabs {
+      margin: 2rem 0;
+    }
+
+    /* Improve section transitions */
+    #mapSection, #hotelsSection, #restaurantsSection, #itinerarySection {
+      transition: opacity 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center w-100">
+      <a class="navbar-brand" href="index.html">
+        <span style="color: var(--primary-color)">Tra</span><span style="color: var(--secondary-color)">velo</span>
+      </a>
+      <div class="d-flex align-items-center">
+        <a href="index.html" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house me-1" viewBox="0 0 16 16">
+            <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
+          </svg>
+          Home
+        </a>
+        <div class="settings-group">
+          <div class="settings-dropdown">
+            <select id="langSelect" class="form-select-sm">
+              <option value="bn" selected>🌐 বাংলা</option>
+              <option value="en">🌐 English</option>
+              <option value="fr">🌐 Français</option>
+              <option value="es">🌐 Español</option>
+            </select>
+          </div>
+          <div class="settings-dropdown">
+            <select id="currencySelect" class="form-select-sm">
+              <option value="BDT" selected>💱 BDT (৳)</option>
+              <option value="USD">💱 USD ($)</option>
+              <option value="EUR">💱 EUR (€)</option>
+              <option value="INR">💱 INR (₹)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Header -->
+<section class="header-section" style="margin-top: 71px;">
+  <div class="container">
+    <h2>Your AI-Powered Travel Planner</h2>
+    <p>Plan smarter, explore better – powered by AI and real-time APIs.</p>
+  </div>
+</section>
+
+<!-- Trip Planner Form -->
+<section class="container">
+  <div class="trip-card">
+    <form id="tripForm" class="row g-3">
+      <div class="col-md-4">
+        <label for="origin" class="form-label">Origin</label>
+        <input type="text" class="form-control" id="origin" placeholder="e.g., Dhaka" required>
+      </div>
+      <div class="col-md-4">
+        <label for="destination" class="form-label">Destination</label>
+        <input type="text" class="form-control" id="destination" placeholder="e.g., New York, USA" required>
+      </div>
+      <div class="col-md-3">
+        <label for="date" class="form-label">Travel Date</label>
+        <input type="date" class="form-control" id="date" required>
+      </div>
+      <div class="col-md-1 d-flex align-items-end">
+        <button type="submit" class="btn btn-search w-100">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          </svg>
+        </button>
+      </div>
+    </form>
+
+    <!-- Preloader -->
+    <div class="text-center my-4 loader-container" id="funnyLoader" style="display: none;">
+      <div class="spinner-grow text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-3 mb-0">Planning your dream trip... 🧳✈️🌍</p>
+    </div>
+
+    <!-- Error -->
+    <div class="error-message" id="errorBox" style="display: none;"></div>
+    
+    <!-- Results Container -->
+    <div id="resultBox" style="display:none;">
+      <!-- Weather and Distance Info -->
+      <div class="weather-widget" id="weatherBox" style="display:none;">
+        <div class="weather-content" id="weatherContent"></div>
+      </div>
+
+      <div class="distance-info" id="distanceBox" style="display:none;">
+        <div class="distance-item">
+          <div class="distance-value" id="distanceValue">0 km</div>
+          <div class="distance-label">Total Distance</div>
+        </div>
+        <div class="distance-item">
+          <div class="distance-value" id="durationValue">0 hrs</div>
+          <div class="distance-label">Travel Time</div>
+        </div>
+      </div>
+
+      <!-- Section Tabs -->
+      <div class="section-tabs">
+        <div class="section-tab active" data-section="map">Map View</div>
+        <div class="section-tab" data-section="hotels">Hotels</div>
+        <div class="section-tab" data-section="restaurants">Restaurants</div>
+        <div class="section-tab" data-section="itinerary">Itinerary</div>
+      </div>
+
+      <!-- Map Section -->
+      <div id="mapSection" class="map-container">
+        <div class="map-header">
+          <h3 class="section-title">🗺️ Interactive Map</h3>
+        </div>
+        <div id="map" class="map-content"></div>
+      </div>
+
+      <!-- Hotels Section -->
+      <div id="hotelsSection">
+        <h3 class="section-title">🏨 Recommended Hotels</h3>
+        <div class="card-grid" id="hotelsList"></div>
+      </div>
+
+      <!-- Restaurants Section -->
+      <div id="restaurantsSection">
+        <h3 class="section-title">🍽️ Popular Restaurants</h3>
+        <div class="card-grid" id="restaurantsList"></div>
+      </div>
+
+      <!-- Itinerary Section -->
+      <div id="itinerarySection">
+        <div class="itinerary-container">
+          <div class="itinerary-header">
+            <h3 class="section-title mb-0">📅 Your Travel Itinerary</h3>
+            <p class="mb-0 opacity-75">Customized day-by-day plan for your trip</p>
+          </div>
+          <div class="itinerary-content" id="itineraryContent">
+            <!-- Content will be populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Load the main JavaScript file -->
+<script src="js/main.js"></script>
+
+</body>
+</html>

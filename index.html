@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Travelo – Trip Planner</title>
+  <title>Travelo – Your Ultimate Travel Companion</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     :root {
       --primary-color: #FF6B6B;
@@ -16,8 +15,6 @@
       --border-radius: 16px;
       --box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
       --accent-color: #FFE66D;
-      --danger-color: #FF6B6B;
-      --success-color: #4ECDC4;
     }
 
     body {
@@ -39,382 +36,153 @@
       font-size: 1.5rem;
     }
 
-    .header-section {
-      padding: 4rem 0;
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, rgba(255, 107, 107, 0.9), rgba(78, 205, 196, 0.9)),
+                  url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1920&q=80') center/cover;
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      color: white;
       text-align: center;
-      background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
-      color: white;
-      margin-bottom: 2rem;
+      padding: 4rem 0;
     }
 
-    .header-section h2 {
+    .hero-title {
+      font-size: 3.5rem;
       font-weight: 800;
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .header-section p {
-      opacity: 0.9;
-      font-size: 1.1rem;
-    }
-
-    .trip-card {
-      background-color: var(--card-background);
-      border-radius: var(--border-radius);
-      padding: 2rem;
-      box-shadow: var(--box-shadow);
-      margin-bottom: 2rem;
-    }
-
-    .info-card {
-      background-color: var(--card-background);
-      border-radius: var(--border-radius);
-      padding: 1.5rem;
-      box-shadow: var(--box-shadow);
-      margin-top: 1.5rem;
-      transition: transform 0.2s ease;
-    }
-
-    .info-card:hover {
-      transform: translateY(-2px);
-    }
-
-    .form-control, .form-select {
-      border-radius: 12px;
-      padding: 0.75rem 1rem;
-      border: 1px solid #e2e8f0;
-      background-color: #f8fafc;
-      transition: all 0.2s ease;
-    }
-
-    .form-control:focus, .form-select:focus {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-    }
-
-    .btn-search {
-      background-color: var(--primary-color);
-      color: white;
-      border-radius: 12px;
-      padding: 0.75rem 1.5rem;
-      border: none;
-      transition: all 0.2s ease;
-    }
-
-    .btn-search:hover {
-      background-color: #ff5252;
-      transform: translateY(-1px);
-    }
-
-    .bg-soft-blue { background-color: #E3F2FD; }
-    .bg-soft-peach { background-color: #FFE5E5; }
-    .bg-soft-mint { background-color: #E0F5F2; }
-    .bg-soft-yellow { background-color: #FFF9E6; }
-    .bg-soft-purple { background-color: #F3E5F5; }
-
-    .hotel-image {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 1rem;
-    }
-
-    #map {
-      border-radius: var(--border-radius);
-      overflow: hidden;
-      box-shadow: var(--box-shadow);
-    }
-
-    .settings-dropdown {
-      background-color: #f8fafc;
-      border-radius: 12px;
-      padding: 0.5rem;
-    }
-
-    .loader-container {
-      background-color: rgba(255, 255, 255, 0.9);
-      border-radius: var(--border-radius);
-      padding: 2rem;
-    }
-
-    .error-message {
-      color: #ef4444;
-      background-color: #fef2f2;
-      border-radius: 12px;
-      padding: 1rem;
-      margin-top: 1rem;
-    }
-
-    /* New styles for dedicated sections */
-    .section-title {
-      font-size: 1.75rem;
-      font-weight: 800;
-      color: var(--text-color);
       margin-bottom: 1.5rem;
     }
 
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1.5rem;
+    .hero-subtitle {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
     }
 
-    .place-card {
-      background: var(--card-background);
+    /* Features Section */
+    .features-section {
+      padding: 6rem 0;
+      background: white;
+    }
+
+    .feature-card {
+      text-align: center;
+      padding: 2rem;
+      border-radius: var(--border-radius);
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Destinations Section */
+    .destinations-section {
+      padding: 6rem 0;
+      background: var(--background-color);
+    }
+
+    .destination-card {
       border-radius: var(--border-radius);
       overflow: hidden;
       box-shadow: var(--box-shadow);
-      transition: transform 0.2s ease;
+      margin-bottom: 2rem;
+      background: white;
+      transition: transform 0.3s ease;
     }
 
-    .place-card:hover {
-      transform: translateY(-4px);
+    .destination-card:hover {
+      transform: translateY(-10px);
     }
 
-    .place-card-image {
+    .destination-img {
       width: 100%;
-      height: 200px;
+      height: 250px;
       object-fit: cover;
     }
 
-    .place-card-content {
+    .destination-content {
       padding: 1.5rem;
     }
 
-    .place-card-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--text-color);
-    }
-
-    .place-card-info {
-      font-size: 0.875rem;
-      color: #64748b;
-      margin-bottom: 0.5rem;
-    }
-
-    .place-card-rating {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .rating-stars {
-      color: #fbbf24;
-    }
-
-    .place-card-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--primary-color);
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.875rem;
-    }
-
-    .place-card-link:hover {
-      color: var(--secondary-color);
-    }
-
-    .map-container {
-      background: var(--card-background);
-      border-radius: var(--border-radius);
-      overflow: hidden;
-      box-shadow: var(--box-shadow);
-      margin-bottom: 2rem;
-    }
-
-    .map-header {
-      padding: 1.5rem;
-      border-bottom: 1px solid #e2e8f0;
-    }
-
-    .map-content {
-      height: 500px;
-    }
-
-    .section-tabs {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      border-bottom: 1px solid #e2e8f0;
-      padding-bottom: 1rem;
-    }
-
-    .section-tab {
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 500;
-      transition: all 0.2s ease;
-    }
-
-    .section-tab.active {
-      background: var(--primary-color);
-      color: white;
-    }
-
-    .section-tab:not(.active):hover {
-      background: #f1f5f9;
-    }
-
-    .weather-widget {
+    /* Testimonials Section */
+    .testimonials-section {
+      padding: 6rem 0;
       background: linear-gradient(135deg, #4ECDC4, #2AB7CA);
       color: white;
+    }
+
+    .testimonial-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
       padding: 2rem;
       border-radius: var(--border-radius);
-      margin: 3rem 0 2rem;
-      box-shadow: var(--box-shadow);
-    }
-
-    .weather-content {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .weather-temp {
-      font-size: 3.5rem;
-      font-weight: 700;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      line-height: 1;
-    }
-
-    .weather-info {
-      font-size: 1.1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .distance-info {
-      display: flex;
-      gap: 2rem;
       margin-bottom: 2rem;
     }
 
-    .distance-item {
-      flex: 1;
-      background: var(--card-background);
-      padding: 1.5rem;
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-    }
-
-    .distance-value {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--primary-color);
-    }
-
-    .distance-label {
-      font-size: 0.875rem;
-      color: #64748b;
-      margin-top: 0.5rem;
-    }
-
-    /* New Itinerary Styles */
-    .itinerary-container {
-      background: var(--card-background);
-      border-radius: var(--border-radius);
-      overflow: hidden;
-      box-shadow: var(--box-shadow);
-    }
-
-    .itinerary-header {
-      background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
-      color: white;
-      padding: 2rem;
-    }
-
-    .itinerary-content {
-      padding: 2rem;
-    }
-
-    .itinerary-day {
-      border-left: 3px solid var(--secondary-color);
-      padding: 1rem 0 1rem 2rem;
-      margin-bottom: 2rem;
-      position: relative;
-    }
-
-    .itinerary-day:last-child {
-      margin-bottom: 0;
-    }
-
-    .itinerary-day::before {
-      content: '';
-      position: absolute;
-      left: -9px;
-      top: 0;
-      width: 15px;
-      height: 15px;
+    .testimonial-avatar {
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
-      background: var(--secondary-color);
-      border: 3px solid white;
-      box-shadow: var(--box-shadow);
-    }
-
-    .itinerary-day h4 {
-      color: var(--primary-color);
-      font-weight: 700;
       margin-bottom: 1rem;
-      font-size: 1.25rem;
     }
 
-    .itinerary-day p {
-      color: var(--text-color);
-      margin-bottom: 0.75rem;
-      line-height: 1.6;
+    /* Contact Section */
+    .contact-section {
+      padding: 6rem 0;
+      background: white;
     }
 
-    .itinerary-day ul {
-      margin: 1rem 0;
-      padding-left: 1.5rem;
+    .contact-info {
+      padding: 2rem;
+      background: var(--background-color);
+      border-radius: var(--border-radius);
     }
 
-    .itinerary-day li {
-      margin-bottom: 0.5rem;
-      color: #4b5563;
+    .btn-primary {
+      background-color: var(--primary-color);
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: var(--border-radius);
+      transition: all 0.3s ease;
     }
 
-    .itinerary-day .time {
-      font-weight: 600;
-      color: var(--primary-color);
+    .btn-primary:hover {
+      background-color: #ff5252;
+      transform: translateY(-2px);
     }
 
-    .itinerary-day .location {
-      font-style: italic;
-      color: #6b7280;
+    .btn-outline-light {
+      border-radius: var(--border-radius);
+      padding: 0.75rem 2rem;
     }
 
-    .itinerary-day .cost {
-      display: inline-block;
-      background: #f3f4f6;
-      padding: 0.25rem 0.75rem;
-      border-radius: 1rem;
-      font-size: 0.875rem;
-      color: #374151;
-      margin-left: 0.5rem;
+    /* Footer */
+    .footer {
+      background: #2C3E50;
+      color: white;
+      padding: 4rem 0 2rem;
     }
 
-    /* Update section spacing */
-    #resultBox {
-      padding-top: 2rem;
+    .footer-link {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: color 0.3s ease;
     }
 
-    .section-tabs {
-      margin: 2rem 0;
+    .footer-link:hover {
+      color: var(--accent-color);
     }
 
-    /* Improve section transitions */
-    #mapSection, #hotelsSection, #restaurantsSection, #itinerarySection {
-      transition: opacity 0.3s ease;
+    .social-links {
+      font-size: 1.5rem;
     }
   </style>
 </head>
@@ -423,127 +191,81 @@
 <!-- Navigation -->
 <nav class="navbar sticky-top">
   <div class="container">
-    <a class="navbar-brand" href="#">Travelo</a>
+    <a class="navbar-brand" href="index.html">Travelo</a>
     <div class="d-flex gap-3">
-      <div class="settings-dropdown">
-        <select id="langSelect" class="form-select form-select-sm">
-          <option value="bn" selected>🌐 বাংলা</option>
-          <option value="en">🌐 English</option>
-          <option value="fr">🌐 Français</option>
-          <option value="es">🌐 Español</option>
-        </select>
-      </div>
-      <div class="settings-dropdown">
-        <select id="currencySelect" class="form-select form-select-sm">
-          <option value="BDT" selected>💱 BDT (৳)</option>
-          <option value="USD">💱 USD ($)</option>
-          <option value="EUR">💱 EUR (€)</option>
-          <option value="INR">💱 INR (₹)</option>
-        </select>
-      </div>
+      <a href="planner.html" class="btn btn-primary">Plan Your Trip</a>
     </div>
   </div>
 </nav>
 
-<!-- Header -->
-<section class="header-section">
+<!-- Hero Section -->
+<section class="hero-section">
   <div class="container">
-    <h2>Your AI-Powered Travel Planner</h2>
-    <p>Plan smarter, explore better – powered by AI and real-time APIs.</p>
+    <h1 class="hero-title">Discover Your Next Adventure</h1>
+    <p class="hero-subtitle">AI-powered travel planning for unforgettable journeys</p>
+    <a href="planner.html" class="btn btn-outline-light btn-lg">Start Planning</a>
   </div>
 </section>
 
-<!-- Trip Planner Form -->
-<section class="container">
-  <div class="trip-card">
-    <form id="tripForm" class="row g-3">
+<!-- Features Section -->
+<section class="features-section">
+  <div class="container">
+    <h2 class="text-center mb-5">Why Choose Travelo?</h2>
+    <div class="row g-4">
       <div class="col-md-4">
-        <label for="origin" class="form-label">Origin</label>
-        <input type="text" class="form-control" id="origin" placeholder="e.g., Dhaka" required>
+        <div class="feature-card">
+          <div class="feature-icon">🤖</div>
+          <h3>AI-Powered Planning</h3>
+          <p>Smart algorithms that understand your preferences and create personalized itineraries.</p>
+        </div>
       </div>
       <div class="col-md-4">
-        <label for="destination" class="form-label">Destination</label>
-        <input type="text" class="form-control" id="destination" placeholder="e.g., New York, USA" required>
+        <div class="feature-card">
+          <div class="feature-icon">🗺️</div>
+          <h3>Interactive Maps</h3>
+          <p>Explore destinations with detailed maps showing hotels, restaurants, and attractions.</p>
+        </div>
       </div>
-      <div class="col-md-3">
-        <label for="date" class="form-label">Travel Date</label>
-        <input type="date" class="form-control" id="date" required>
+      <div class="col-md-4">
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Real-time Updates</h3>
+          <p>Get live weather updates, travel times, and local recommendations.</p>
+        </div>
       </div>
-      <div class="col-md-1 d-flex align-items-end">
-        <button type="submit" class="btn btn-search w-100">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-          </svg>
-        </button>
-      </div>
-    </form>
-
-    <!-- Preloader -->
-    <div class="text-center my-4 loader-container" id="funnyLoader" style="display: none;">
-      <div class="spinner-grow text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-      <p class="mt-3 mb-0">Planning your dream trip... 🧳✈️🌍</p>
     </div>
+  </div>
+</section>
 
-    <!-- Error -->
-    <div class="error-message" id="errorBox" style="display: none;"></div>
-    
-    <!-- Results Container -->
-    <div id="resultBox" style="display:none;">
-      <!-- Weather and Distance Info -->
-      <div class="weather-widget" id="weatherBox" style="display:none;">
-        <div class="weather-content" id="weatherContent"></div>
-      </div>
-
-      <div class="distance-info" id="distanceBox" style="display:none;">
-        <div class="distance-item">
-          <div class="distance-value" id="distanceValue">0 km</div>
-          <div class="distance-label">Total Distance</div>
-        </div>
-        <div class="distance-item">
-          <div class="distance-value" id="durationValue">0 hrs</div>
-          <div class="distance-label">Travel Time</div>
-        </div>
-      </div>
-
-      <!-- Section Tabs -->
-      <div class="section-tabs">
-        <div class="section-tab active" data-section="map">Map View</div>
-        <div class="section-tab" data-section="hotels">Hotels</div>
-        <div class="section-tab" data-section="restaurants">Restaurants</div>
-        <div class="section-tab" data-section="itinerary">Itinerary</div>
-      </div>
-
-      <!-- Map Section -->
-      <div id="mapSection" class="map-container">
-        <div class="map-header">
-          <h3 class="section-title">🗺️ Interactive Map</h3>
-        </div>
-        <div id="map" class="map-content"></div>
-      </div>
-
-      <!-- Hotels Section -->
-      <div id="hotelsSection">
-        <h3 class="section-title">🏨 Recommended Hotels</h3>
-        <div class="card-grid" id="hotelsList"></div>
-      </div>
-
-      <!-- Restaurants Section -->
-      <div id="restaurantsSection">
-        <h3 class="section-title">🍽️ Popular Restaurants</h3>
-        <div class="card-grid" id="restaurantsList"></div>
-      </div>
-
-      <!-- Itinerary Section -->
-      <div id="itinerarySection">
-        <div class="itinerary-container">
-          <div class="itinerary-header">
-            <h3 class="section-title mb-0">📅 Your Travel Itinerary</h3>
-            <p class="mb-0 opacity-75">Customized day-by-day plan for your trip</p>
+<!-- Popular Destinations -->
+<section class="destinations-section">
+  <div class="container">
+    <h2 class="text-center mb-5">Popular Destinations</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="destination-card">
+          <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=600&q=80" alt="Paris" class="destination-img">
+          <div class="destination-content">
+            <h3>Paris, France</h3>
+            <p>Experience the city of love and its iconic landmarks.</p>
           </div>
-          <div class="itinerary-content" id="itineraryContent">
-            <!-- Content will be populated by JavaScript -->
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="destination-card">
+          <img src="https://images.unsplash.com/photo-1533050487297-09b450131914?auto=format&fit=crop&w=600&q=80" alt="Tokyo" class="destination-img">
+          <div class="destination-content">
+            <h3>Tokyo, Japan</h3>
+            <p>Immerse yourself in the perfect blend of tradition and technology.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="destination-card">
+          <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=600&q=80" alt="Santorini" class="destination-img">
+          <div class="destination-content">
+            <h3>Santorini, Greece</h3>
+            <p>Discover breathtaking views and beautiful Mediterranean culture.</p>
           </div>
         </div>
       </div>
@@ -551,8 +273,113 @@
   </div>
 </section>
 
-<!-- Load the main JavaScript file -->
-<script src="js/main.js"></script>
+<!-- Testimonials -->
+<section class="testimonials-section">
+  <div class="container">
+    <h2 class="text-center mb-5">What Our Travelers Say</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="testimonial-card">
+          <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah" class="testimonial-avatar">
+          <h4>Sarah Johnson</h4>
+          <p>"Travelo made planning my Europe trip so easy! The AI suggestions were spot-on."</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="testimonial-card">
+          <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Michael" class="testimonial-avatar">
+          <h4>Michael Chen</h4>
+          <p>"The interactive maps and real-time updates helped me navigate Tokyo like a local."</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="testimonial-card">
+          <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Emma" class="testimonial-avatar">
+          <h4>Emma Garcia</h4>
+          <p>"Best travel planning tool I've ever used. Saved me hours of research!"</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h2 class="mb-4">Get in Touch</h2>
+        <form>
+          <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Your Name">
+          </div>
+          <div class="mb-3">
+            <input type="email" class="form-control" placeholder="Your Email">
+          </div>
+          <div class="mb-3">
+            <textarea class="form-control" rows="4" placeholder="Your Message"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+      </div>
+      <div class="col-md-5 offset-md-1">
+        <div class="contact-info">
+          <h3 class="mb-4">Contact Information</h3>
+          <p>📍 123 Travel Street, Adventure City</p>
+          <p>📞 +1 234 567 890</p>
+          <p>✉️ hello@travelo.com</p>
+          <div class="social-links mt-4">
+            <a href="#" class="footer-link me-3">📱</a>
+            <a href="#" class="footer-link me-3">👥</a>
+            <a href="#" class="footer-link me-3">📸</a>
+            <a href="#" class="footer-link">🐦</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <h4>About Travelo</h4>
+        <p>Your AI-powered travel companion for creating unforgettable journeys around the world.</p>
+      </div>
+      <div class="col-md-2 mb-4">
+        <h4>Quick Links</h4>
+        <ul class="list-unstyled">
+          <li><a href="#" class="footer-link">About Us</a></li>
+          <li><a href="#" class="footer-link">Services</a></li>
+          <li><a href="#" class="footer-link">Blog</a></li>
+          <li><a href="#" class="footer-link">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-md-2 mb-4">
+        <h4>Support</h4>
+        <ul class="list-unstyled">
+          <li><a href="#" class="footer-link">FAQ</a></li>
+          <li><a href="#" class="footer-link">Privacy Policy</a></li>
+          <li><a href="#" class="footer-link">Terms of Use</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 mb-4">
+        <h4>Newsletter</h4>
+        <p>Subscribe to our newsletter for travel tips and exclusive offers.</p>
+        <div class="input-group">
+          <input type="email" class="form-control" placeholder="Your email">
+          <button class="btn btn-primary">Subscribe</button>
+        </div>
+      </div>
+    </div>
+    <hr class="mt-4 mb-3">
+    <div class="text-center">
+      <p class="mb-0">© 2024 Travelo. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
 
 </body>
-</html>
+</html> 

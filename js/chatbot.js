@@ -109,7 +109,7 @@ async function processMessage(message) {
   }
 
   // Regular conversation
-  const response = await fetch('http://localhost:8000/api/chat', {
+  const response = await fetch('https://travelo-backend-production-454e.up.railway.app/api/chat', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

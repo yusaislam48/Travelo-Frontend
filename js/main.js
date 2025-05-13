@@ -50,7 +50,7 @@ document.getElementById('tripForm').addEventListener('submit', async function (e
   
   try {
     // Fetch trip plan
-    const response = await fetch('http://127.0.0.1:8000/api/plan-trip', {
+    const response = await fetch('https://travelo-backend-production-454e.up.railway.app/api/plan-trip', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ origin, destination, date, language, currency })
@@ -255,7 +255,7 @@ function displayRestaurants(restaurants) {
 
 async function fetchWeather(city) {
   try {
-    const keyRes = await fetch('http://127.0.0.1:8000/api/config/weather-key');
+    const keyRes = await fetch('https://travelo-backend-production-454e.up.railway.app/api/config/weather-key');
     const keyData = await keyRes.json();
     const weatherApiKey = keyData.key;
 
@@ -326,7 +326,7 @@ window.initMap = function () {
 // Google Maps API loader
 async function loadGoogleMapsScript() {
   try {
-    const res = await fetch('http://127.0.0.1:8000/api/config/maps-key');
+    const res = await fetch('https://travelo-backend-production-454e.up.railway.app/api/config/maps-key');
     const data = await res.json();
     const apiKey = data.key;
 
@@ -361,4 +361,15 @@ document.querySelectorAll('#currencyDropdown .dropdown-item').forEach(item => {
     selectedCurrency = item.getAttribute('data-currency');
     document.getElementById('currencyDropdown').textContent = `💱 ${item.textContent}`;
   });
-}); 
+});
+
+async function fetchWeatherKey() {
+  try {
+    const keyRes = await fetch('https://travelo-backend-production-454e.up.railway.app/api/config/weather-key');
+    const keyData = await keyRes.json();
+    return keyData.key;
+  } catch (error) {
+    console.error('Error fetching weather API key:', error);
+    return null;
+  }
+} 

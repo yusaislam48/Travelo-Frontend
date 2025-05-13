@@ -66,7 +66,56 @@ document.getElementById('tripForm').addEventListener('submit', async function (e
       initializeMapAndPlaces(destination);
       
       // Display itinerary
-      document.getElementById('itineraryContent').innerHTML = marked.parse(data.result);
+      const itineraryContent = document.getElementById('itineraryContent');
+      const parsedContent = marked.parse(data.result);
+      
+      // Convert the markdown content into our styled format
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = parsedContent;
+      
+      // Process each day's content
+      const days = tempDiv.querySelectorAll('h1, h2, h3');
+      let formattedContent = '';
+      
+      days.forEach(day => {
+        const dayTitle = day.textContent;
+        const dayContent = [];
+        let currentElement = day.nextElementSibling;
+        
+        while (currentElement && !currentElement.matches('h1, h2, h3')) {
+          dayContent.push(currentElement.outerHTML);
+          currentElement = currentElement.nextElementSibling;
+        }
+        
+        formattedContent += `
+          <div class="itinerary-day">
+            <h4><i class="fas fa-calendar-day"></i>${dayTitle}</h4>
+            <div>${dayContent.join('')}</div>
+          </div>
+        `;
+      });
+      
+      itineraryContent.innerHTML = formattedContent;
+      
+      // Add icons to list items
+      itineraryContent.querySelectorAll('li').forEach(li => {
+        const icon = document.createElement('i');
+        icon.className = 'fas fa-check-circle';
+        li.insertBefore(icon, li.firstChild);
+      });
+      
+      // Add icons to time and location spans
+      itineraryContent.querySelectorAll('.time').forEach(time => {
+        const icon = document.createElement('i');
+        icon.className = 'fas fa-clock';
+        time.insertBefore(icon, time.firstChild);
+      });
+      
+      itineraryContent.querySelectorAll('.location').forEach(location => {
+        const icon = document.createElement('i');
+        icon.className = 'fas fa-map-marker-alt';
+        location.insertBefore(icon, location.firstChild);
+      });
       
       // Fetch additional data
       await Promise.all([

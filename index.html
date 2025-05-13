@@ -27,15 +27,98 @@
     }
 
     .navbar {
-      background-color: var(--card-background);
-      box-shadow: var(--box-shadow);
-      padding: 1rem 0;
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 0.75rem 0;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
     }
 
     .navbar-brand {
-      font-weight: 700;
+      font-weight: 800;
+      font-size: 1.75rem;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-link {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      font-size: 0.95rem;
+    }
+
+    .nav-link:hover {
       color: var(--primary-color);
-      font-size: 1.5rem;
+      background-color: rgba(255, 107, 107, 0.1);
+    }
+
+    .nav-link.active {
+      color: var(--primary-color);
+      background-color: rgba(255, 107, 107, 0.1);
+    }
+
+    .settings-group {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-left: 1.5rem;
+      padding-left: 1.5rem;
+      border-left: 2px solid #e2e8f0;
+    }
+
+    .settings-dropdown {
+      position: relative;
+    }
+
+    .settings-dropdown select {
+      appearance: none;
+      background: transparent;
+      border: none;
+      padding: 0.5rem 2rem 0.5rem 0.75rem;
+      font-size: 0.9rem;
+      color: var(--text-color);
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .settings-dropdown::after {
+      content: '▼';
+      font-size: 0.8rem;
+      color: var(--text-color);
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .settings-dropdown select:hover {
+      background-color: rgba(255, 107, 107, 0.1);
+    }
+
+    .settings-dropdown select:focus {
+      outline: none;
+      background-color: rgba(255, 107, 107, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .settings-group {
+        margin-left: 1rem;
+        padding-left: 1rem;
+      }
+
+      .settings-dropdown select {
+        padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+        font-size: 0.8rem;
+      }
     }
 
     /* Hero Section */
@@ -193,9 +276,33 @@
 <!-- Navigation -->
 <nav class="navbar sticky-top">
   <div class="container">
-    <a class="navbar-brand" href="index.html">Travelo</a>
-    <div class="d-flex gap-3">
-      <a href="planner.html" class="btn btn-primary">Plan Your Trip</a>
+    <div class="d-flex justify-content-between align-items-center w-100">
+      <a class="navbar-brand" href="index.html">
+        <span style="color: var(--primary-color)">Tra</span><span style="color: var(--secondary-color)">velo</span>
+      </a>
+      <div class="d-flex align-items-center gap-3">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="planner.html" class="nav-link">Trip Planner</a>
+        <a href="image-search.html" class="nav-link">Image Search</a>
+        <div class="settings-group">
+          <div class="settings-dropdown">
+            <select id="langSelect" class="form-select-sm">
+              <option value="bn" selected>🌐 বাংলা</option>
+              <option value="en">🌐 English</option>
+              <option value="fr">🌐 Français</option>
+              <option value="es">🌐 Español</option>
+            </select>
+          </div>
+          <div class="settings-dropdown">
+            <select id="currencySelect" class="form-select-sm">
+              <option value="BDT" selected>💱 BDT (৳)</option>
+              <option value="USD">💱 USD ($)</option>
+              <option value="EUR">💱 EUR (€)</option>
+              <option value="INR">💱 INR (₹)</option>
+            </select>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </nav>

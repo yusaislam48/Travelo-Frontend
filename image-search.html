@@ -58,6 +58,63 @@
       background-color: rgba(255, 107, 107, 0.1);
     }
 
+    .settings-group {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-left: 1.5rem;
+      padding-left: 1.5rem;
+      border-left: 2px solid #e2e8f0;
+    }
+
+    .settings-dropdown {
+      position: relative;
+    }
+
+    .settings-dropdown select {
+      appearance: none;
+      background: transparent;
+      border: none;
+      padding: 0.5rem 2rem 0.5rem 0.75rem;
+      font-size: 0.9rem;
+      color: var(--text-color);
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .settings-dropdown::after {
+      content: '▼';
+      font-size: 0.8rem;
+      color: var(--text-color);
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .settings-dropdown select:hover {
+      background-color: rgba(255, 107, 107, 0.1);
+    }
+
+    .settings-dropdown select:focus {
+      outline: none;
+      background-color: rgba(255, 107, 107, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .settings-group {
+        margin-left: 1rem;
+        padding-left: 1rem;
+      }
+
+      .settings-dropdown select {
+        padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+        font-size: 0.8rem;
+      }
+    }
+
     .header-section {
       padding: 6rem 0 4rem;
       text-align: center;
@@ -357,8 +414,27 @@
         <span style="color: var(--primary-color)">Tra</span><span style="color: var(--secondary-color)">velo</span>
       </a>
       <div class="d-flex align-items-center gap-3">
-        <a href="index.html" class="nav-link">Home</a>
+        <a href="index.html" class="nav-link active">Home</a>
         <a href="planner.html" class="nav-link">Trip Planner</a>
+        <a href="image-search.html" class="nav-link">Image Search</a>
+        <div class="settings-group">
+          <div class="settings-dropdown">
+            <select id="langSelect" class="form-select-sm">
+              <option value="bn" selected>🌐 বাংলা</option>
+              <option value="en">🌐 English</option>
+              <option value="fr">🌐 Français</option>
+              <option value="es">🌐 Español</option>
+            </select>
+          </div>
+          <div class="settings-dropdown">
+            <select id="currencySelect" class="form-select-sm">
+              <option value="BDT" selected>💱 BDT (৳)</option>
+              <option value="USD">💱 USD ($)</option>
+              <option value="EUR">💱 EUR (€)</option>
+              <option value="INR">💱 INR (₹)</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
   </div>
